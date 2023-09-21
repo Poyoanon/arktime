@@ -44,7 +44,7 @@ const SanityReminder: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center">
       <div>
         <h1 className="text-center font-black">Arktime</h1>
         <p>
