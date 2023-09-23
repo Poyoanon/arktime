@@ -46,15 +46,13 @@ const SanityReminder: React.FC = () => {
   return (
     <div className="flex items-center justify-center">
       <div>
-        <h1 className="text-center font-black">Arktime</h1>
-        <p>
-          A reminder app for letting you know when your Sanity will reach the
-          maximum in Arknights.
-        </p>
+        <h1 className="text-2xl font-semibold mb-4 text-center">
+          Sanity Reminder
+        </h1>
         <label>
           Current Sanity:
           <input
-            className="text-black"
+            className="text-black ml-2"
             type="number"
             value={currentSanity}
             onChange={handleSanityChange}
