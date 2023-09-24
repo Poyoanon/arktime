@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import moment from "moment-timezone";
+import { DateTime } from "luxon"; 
 
 interface Stage {
   src: string;
@@ -13,14 +13,12 @@ const DailyStages: React.FC = () => {
 
   useEffect(() => {
     const fetchCurrentStage = () => {
-      const utcMinus7 = moment().tz("America/Los_Angeles");
-      const currentDay = utcMinus7.format("dddd");
+      const utcMinus7 = DateTime.now().setZone("America/Los_Angeles");
+      const currentDay = utcMinus7.toFormat("cccc");
 
-      const resetTime = utcMinus7
-        .clone()
-        .set({ hour: 4, minute: 0, second: 0 });
+      const resetTime = utcMinus7.set({ hour: 4, minute: 0, second: 0 });
 
-      if (utcMinus7.isAfter(resetTime)) {
+      if (utcMinus7 > resetTime) {
         const dayStrings = [
           "Sunday",
           "Monday",

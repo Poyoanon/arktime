@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import moment from "moment-timezone";
+import { DateTime } from "luxon";
 
 const ServerTime = () => {
   const [currentDay, setCurrentDay] = useState<number>(0);
@@ -8,12 +8,12 @@ const ServerTime = () => {
 
   useEffect(() => {
     const updateDateTime = () => {
-      const utcMinus7 = moment().tz("America/Los_Angeles"); // UTC-7 timezone
+      const utcMinus7 = DateTime.now().setZone("America/Los_Angeles");
 
-      const currentDayIndex = (utcMinus7.day() + 6) % 7; // Start the week on Monday
+      const currentDayIndex = (utcMinus7.weekday - 1 + 7) % 7;
       setCurrentDay(currentDayIndex);
 
-      const formattedTime = utcMinus7.format("HH:mm:ss");
+      const formattedTime = utcMinus7.toFormat("HH:mm:ss");
       setServerTime(formattedTime);
     };
 
