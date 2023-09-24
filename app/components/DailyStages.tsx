@@ -104,13 +104,37 @@ const DailyStages: React.FC = () => {
       <div className="flex items-center justify-center">
         {currentStages.length > 0 ? (
           currentStages.map((currentStage, index) => (
-            <div key={index} className=" rounded-full relative text-white">
+            <div key={index} className="relative">
               <img
                 src={currentStage.src}
                 alt={currentStage.name}
-                className="mb-1"
+                className="mb-1 drop-shadow-2xl"
               />
-              <div className="text-sm font-semibold absolute bottom-24 left-0 w-full text-center text-white py-1">
+              <div className="absolute bottom-20 left-0 right-0 flex space-x-1 justify-center">
+                {[
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                  "Sunday",
+                ].map((day, index) => (
+                  <div
+                    key={index}
+                    className={`w-2 h-2 ${
+                      currentStage.days.includes(day)
+                        ? "bg-white"
+                        : "border border-slate-500"
+                    }`}
+                  >
+                    {currentStage.days.includes(day) ? (
+                      <div className="w-2 h-2 bg-white"></div>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+              <div className="text-sm font-semibold absolute bottom-24 left-0 w-full text-center text-white">
                 {currentStage.name}
               </div>
             </div>
