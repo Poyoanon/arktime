@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import moment from "moment-timezone";
 
 interface Stage {
   src: string;
@@ -12,67 +13,81 @@ const DailyStages: React.FC = () => {
 
   useEffect(() => {
     const fetchCurrentStage = () => {
-      const currentDate = new Date();
-      const currentUtcMinus7Time = new Date(
-        currentDate.getTime() - 7 * 60 * 60 * 1000
-      );
-      const currentDay = currentUtcMinus7Time.getUTCDay();
+      const utcMinus7 = moment().tz("America/Los_Angeles");
+      const currentDay = utcMinus7.format("dddd");
 
-      const resetTime = new Date(currentUtcMinus7Time);
-      resetTime.setUTCHours(4, 0, 0, 0);
+      const resetTime = utcMinus7
+        .clone()
+        .set({ hour: 4, minute: 0, second: 0 });
 
-      if (currentUtcMinus7Time >= resetTime) {
-        const dayStrings = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      if (utcMinus7.isAfter(resetTime)) {
+        const dayStrings = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ];
         const images = [
           {
             src: "weekly_5.png",
-            days: ["Mon", "Thu", "Sat", "Sun"],
+            days: ["Monday", "Thursday", "Saturday", "Sunday"],
             name: "Tough Siege",
           },
           {
             src: "weekly_6.png",
-            days: ["Tue", "Wed", "Fri", "Sun"],
+            days: ["Tuesday", "Wednesday", "Friday", "Sunday"],
             name: "Aerial Threat",
           },
           {
             src: "weekly_8.png",
-            days: ["Mon", "Wed", "Fri", "Sat"],
+            days: ["Monday", "Wednesday", "Friday", "Saturday"],
             name: "Resource Search",
           },
           {
             src: "weekly_9.png",
-            days: ["Tue", "Thu", "Sat", "Sun"],
+            days: ["Tuesday", "Thursday", "Saturday", "Sunday"],
             name: "Cargo Escort",
           },
           {
             src: "weekly_7.png",
-            days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            days: [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday",
+            ],
             name: "Tactical Drill",
           },
           {
             src: "weekly_1.png",
-            days: ["Mon", "Thu", "Fri", "Sun"],
+            days: ["Monday", "Thursday", "Friday", "Sunday"],
             name: "Solid Defense",
           },
           {
             src: "weekly_2.png",
-            days: ["Mon", "Tue", "Fri", "Sat"],
+            days: ["Monday", "Tuesday", "Friday", "Saturday"],
             name: "Fierce Attack",
           },
           {
             src: "weekly_3.png",
-            days: ["Wed", "Thu", "Sat", "Sun"],
+            days: ["Wednesday", "Thursday", "Saturday", "Sunday"],
             name: "Unstoppable Charge",
           },
           {
             src: "weekly_4.png",
-            days: ["Tue", "Wed", "Sat", "Sun"],
+            days: ["Tuesday", "Wednesday", "Saturday", "Sunday"],
             name: "Fearless Protection",
           },
         ];
 
         const matchingStages = images.filter((image) =>
-          image.days.includes(dayStrings[currentDay])
+          image.days.includes(currentDay)
         );
 
         setCurrentStages(matchingStages);
@@ -88,10 +103,7 @@ const DailyStages: React.FC = () => {
 
   return (
     <div className="items-center justify-center">
-      <h1 className="text-2xl font-semibold mb-4 text-center">
-        Current Daily Resource Stages
-      </h1>
-      <div className="flex space-x-0 items-center justify-center">
+      <div className="flex items-center justify-center">
         {currentStages.length > 0 ? (
           currentStages.map((currentStage, index) => (
             <div key={index} className=" rounded-full relative text-white">
