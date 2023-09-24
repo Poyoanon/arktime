@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { DateTime } from "luxon"; 
+import { DateTime } from "luxon";
 
 interface Stage {
   src: string;
@@ -100,7 +100,7 @@ const DailyStages: React.FC = () => {
   }, []);
 
   return (
-    <div className="items-center justify-center">
+    <div className="items-center justify-center pt-4">
       <div className="flex items-center justify-center">
         {currentStages.length > 0 ? (
           currentStages.map((currentStage, index) => (
@@ -110,7 +110,7 @@ const DailyStages: React.FC = () => {
                 alt={currentStage.name}
                 className="mb-1"
               />
-              <div className="text-sm font-semibold absolute bottom-24 left-0 w-full text-center bg-black bg-opacity-50 text-white py-1">
+              <div className="text-sm font-semibold absolute bottom-24 left-0 w-full text-center text-white py-1">
                 {currentStage.name}
               </div>
             </div>
