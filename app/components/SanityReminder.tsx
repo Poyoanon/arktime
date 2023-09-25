@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { DateTime, Duration } from "luxon";
 
 const defaultMaxSanity = 135;
@@ -14,6 +14,8 @@ const SanityReminder: React.FC = () => {
   const [notificationsEnabled, setNotificationsEnabled] =
     useState<boolean>(false);
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+  const [sanityIncreaseTimer, setSanityIncreaseTimer] =
+    useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const calculateTimeToMaxSanity = () => {
@@ -48,7 +50,6 @@ const SanityReminder: React.FC = () => {
     }
 
     setNotificationsEnabled(true);
-
     setCountdown("0 hours, 0 minutes, 0 seconds");
 
     if (currentSanity === null || isNaN(currentSanity)) {
@@ -95,15 +96,28 @@ const SanityReminder: React.FC = () => {
       }
     }, 1000);
 
+    const increaseSanityTimer = setInterval(() => {
+      setCurrentSanity((prevSanity) => prevSanity + 1);
+    }, 360000);
+
     setTimer(newTimer);
+    setSanityIncreaseTimer(increaseSanityTimer);
   };
+
   const disableNotifications = () => {
     if (timer) {
       clearInterval(timer);
       setTimer(null);
-      setCountdown("0 hours, 0 minutes, 0 seconds");
     }
+
+    if (sanityIncreaseTimer) {
+      clearInterval(sanityIncreaseTimer);
+      setSanityIncreaseTimer(null);
+    }
+
+    setCountdown("0 hours, 0 minutes, 0 seconds");
     setNotificationsEnabled(false);
+
     if (currentSanity === null || isNaN(currentSanity)) {
       setEstimatedTime("Calculating...");
     }
@@ -157,7 +171,7 @@ const SanityReminder: React.FC = () => {
               value={maxSanity}
               onChange={handleMaxSanityChange}
               min={0}
-              max={maxSanity}
+              max={defaultMaxSanity}
               inputMode="none"
             />
           </label>
