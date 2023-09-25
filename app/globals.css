@@ -20,3 +20,10 @@ body {
   color: rgb(var(--foreground-rgb));
   background: rgb(31, 41, 55);
 }
+
+.disable-arrows::-webkit-inner-spin-button,
+.disable-arrows::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
