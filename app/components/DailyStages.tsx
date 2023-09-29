@@ -15,10 +15,12 @@ const DailyStages: React.FC = () => {
     const fetchCurrentStage = () => {
       const utcMinus7 = DateTime.now().setZone("America/Los_Angeles");
       const currentDay = utcMinus7.toFormat("cccc");
-
       const resetTime = utcMinus7.set({ hour: 4, minute: 0, second: 0 });
 
-      if (utcMinus7 > resetTime) {
+      const nextResetTime =
+        utcMinus7.hour < 4 ? resetTime : resetTime.plus({ days: 1 });
+
+      if (utcMinus7 < nextResetTime) {
         const dayStrings = [
           "Sunday",
           "Monday",
