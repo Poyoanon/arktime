@@ -10,9 +10,9 @@ export default function Home() {
     <>
       <Header />
       <CountdownTimer
-        startDate="September 21, 2023, 10:00"
-        endDate="October 1, 2023, 03:59"
-        eventName="Guide Ahead Rerun"
+        startDate="October 1, 2023, 10:00"
+        endDate="October 15, 2023, 03:59"
+        eventName="Contingency Contract #12: Operation Basepoint"
       />
       <DailyStages />
       <SanityReminder />
